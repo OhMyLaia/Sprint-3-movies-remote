@@ -74,19 +74,19 @@ function orderAlphabetically(array) {
 
   movieTitlesArr.forEach((element, i) => {
     if ( i < 20 ) {
-      console.log(`EXERCISE 4 -> num.${i+1} ${element}`);
       first20MoviesArr.push(element);
     }
     result = first20MoviesArr.sort();
   });
 
-  console.log(`EXERCISE 4 -> ${result}`);
+  result.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}`));
   return result;
 }
 orderAlphabetically(movies);
 
 // Exercise 5: Order by year, ascending
 function orderByYear() {
+  
 
 }
 
