@@ -79,16 +79,35 @@ function orderAlphabetically(array) {
     result = first20MoviesArr.sort();
   });
 
-  result.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}`));
+  //! result.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}`));
   return result;
 }
-orderAlphabetically(movies);
+//! orderAlphabetically(movies);
 
 // Exercise 5: Order by year, ascending
-function orderByYear() {
-  
+function orderByYear(array) {
+  let result = [];
+  let movieReleaseArr = [];
+  let first20MoviesArr = [];
+  array.map( movie => {
+    movieReleaseArr.push(movie.year);
+  });
+  console.log(movieReleaseArr);
 
+  movieReleaseArr.forEach((element, i) => {
+    if ( i < 20 ) {
+      first20MoviesArr.push(element);
+    }
+    result = first20MoviesArr.sort();
+  });
+
+  result.forEach((year, i) => {
+    // aqui filtramos las que son del mismo año por orden alfabetico
+    console.log(`EXERCISE 5 -> num.${i+1} ${year}`)
+  });
+  return result;
 }
+orderByYear(movies);
 
 // Exercise 6: Calculate the average of the movies in a category
 function moviesAverageByCategory() {
