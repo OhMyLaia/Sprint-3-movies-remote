@@ -11,7 +11,7 @@ function getAllDirectors(array) {
   let result = [];
   if (array.length === 0) { return 0 };
 
-  array.map( movie => {
+  array.map(movie => {
     result.push(movie.director);
   });
   //! console.log("EXERCISE 1 ->", result);
@@ -47,7 +47,7 @@ function moviesAverageOfDirector(array, director) {
   let scoresArr = [];
   let totalSum = 0;
   let cleanDirector = toCleanString(director);
-  
+
   array.map(movie => {
     if (cleanDirector === toCleanString(movie.director)) {
       scoresArr.push(movie.score);
@@ -67,13 +67,13 @@ function orderAlphabetically(array) {
   let result = [];
   let movieTitlesArr = [];
   let first20MoviesArr = [];
-  array.map( movie => {
+  array.map(movie => {
     movieTitlesArr.push(movie.title);
   });
-  console.log(movieTitlesArr);
+  // console.log(movieTitlesArr);
 
   movieTitlesArr.forEach((element, i) => {
-    if ( i < 20 ) {
+    if (i < 20) {
       first20MoviesArr.push(element);
     }
     result = first20MoviesArr.sort();
@@ -89,13 +89,13 @@ function orderByYear(array) {
   let result = [];
   let movieReleaseArr = [];
   let first20MoviesArr = [];
-  array.map( movie => {
+
+  array.map(movie => {
     movieReleaseArr.push(movie.year);
   });
-  console.log(movieReleaseArr);
 
   movieReleaseArr.forEach((element, i) => {
-    if ( i < 20 ) {
+    if (i < 20) {
       first20MoviesArr.push(element);
     }
     result = first20MoviesArr.sort();
@@ -103,25 +103,96 @@ function orderByYear(array) {
 
   result.forEach((year, i) => {
     // aqui filtramos las que son del mismo año por orden alfabetico
-    console.log(`EXERCISE 5 -> num.${i+1} ${year}`)
+    //! console.log(`EXERCISE 5 -> num.${i+1} ${year}`);
   });
   return result;
 }
 orderByYear(movies);
 
 // Exercise 6: Calculate the average of the movies in a category
-function moviesAverageByCategory() {
+function moviesAverageByCategory(array, categoryName) {
 
+  if (array.length === 0) { return 0 };
+
+  let result = 0;
+  let totalSum = 0;
+  let score = 0;
+  let singleGenre = "";
+  let scoresArr = [];
+  let genreArr = [];
+  let movie = {};
+  let genre = [];
+  let cleanCategory = toCleanString(categoryName);
+
+  for (let i = 0; i < array.length; i++) {
+    movie = array[i];
+    genre = movie.genre;
+    score = movie.score
+
+    for (let j = 0; j < genre.length; j++) {
+      singleGenre = genre[j];
+
+      if (genre.length == 0) { return console.log(`no genres attached to this film`) };
+
+      if (toCleanString(singleGenre) == cleanCategory) {
+        genreArr.push(singleGenre);
+        scoresArr.push(score);
+      }
+    }
+  }
+
+  totalSum = (scoresArr.reduce((total, value) => total += value)).toFixed(2);
+  result = (totalSum / genreArr.length).toFixed(2);
+  //! console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${genreArr.length}`);
+
+  return result;
 }
+//! moviesAverageByCategory(movies, "Sci-Fi");
+
 
 // Exercise 7: Modify the duration of movies to minutes
-function hoursToMinutes() {
+function hoursToMinutes(array) {
+  let hours = 0;
+  let minutes = 0;
+  let minutes3 = 0;
+  let minutes4 = 0;
+  let hoursInMinutes = 0;
+  let result = 0;
+  let time = 0;
 
+  array.forEach((element, i)=> {
+      time = element.duration;
+      hours = time.charAt(0);
+
+      if (time.charAt(3) && time.charAt(4)) {
+          minutes3 = time.charAt(3);
+          minutes4 = time.charAt(4);
+
+          minutes = minutes3 + minutes4;
+          hoursInMinutes = parseInt(hours) * 60;
+          result = hoursInMinutes + parseInt(minutes);
+          // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes -> ${minutes} / result -> ${result}`);
+
+      } else if (time.charAt(3) && isNaN(time.charAt(4))) {
+          hoursInMinutes = parseInt(hours) * 60;
+          result = hoursInMinutes + parseInt(minutes3);
+          // console.log(durationInMinArr)
+          // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
+      }
+      
+      console.log(`num.${i+1}'s timing -> ${element.duration}`);
+      element.duration = result;
+      console.log(`as a result in minutes -> ${result}`);
+  });
+  
+  console.log(array);
+  return array;
 }
+hoursToMinutes(movies);
 
 // Exercise 8: Get the best film of a year
 function bestFilmOfYear() {
-
+  // necesito todos los scores de ese año
 }
 
 
