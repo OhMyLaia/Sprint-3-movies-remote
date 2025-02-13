@@ -1,13 +1,12 @@
 const movies = require("./data.cjs");
 
-const toFilterElementPerYear = (array, input) => { array.filter( element => element.year == input) };
-
 function toCleanString(string) {
   let cleanString = string.normalize("NFC").replace(/[^\w\s]/g, "").toLowerCase();
+
   return cleanString;
 }
 
-//? Exercise 1: Get the array of all directors.
+// Exercise 1: Get the array of all directors.
 function getAllDirectors(array) {
 
   let result = [];
@@ -16,12 +15,13 @@ function getAllDirectors(array) {
   array.map(movie => {
     result.push(movie.director);
   });
-  //! console.log("EXERCISE 1 ->", result);
+  console.log("EXERCISE 1 ->", result);
+
   return result;
 }
-//! getAllDirectors(movies);
+getAllDirectors(movies);
 
-//? Exercise 2: Get the films of a certain director
+// Exercise 2: Get the films of a certain director
 function getMoviesFromDirector(array, director) {
 
   let result = [];
@@ -36,12 +36,13 @@ function getMoviesFromDirector(array, director) {
       result.push(element.title);
     }
   });
-  //! console.log(`EXERCISE 2 -> ${result}`);
+  console.log(`EXERCISE 2 -> ${result}`);
+
   return result;
 }
-//! getMoviesFromDirector(movies, "Stanley Kubrick");
+getMoviesFromDirector(movies, "Stanley Kubrick");
 
-//? Exercise 3: Calculate the average of the films of a given director.
+// Exercise 3: Calculate the average of the films of a given director.
 function moviesAverageOfDirector(array, director) {
 
   if (array.length === 0) { return 0 };
@@ -55,16 +56,17 @@ function moviesAverageOfDirector(array, director) {
       scoresArr.push(movie.score);
     }
   });
-  // console.log(`ex 3 scores -> ${scoresArr}`);
+  console.log(`ex 3 scores -> ${scoresArr}`);
 
   totalSum = scoresArr.reduce((total, value) => total += value);
   result = (totalSum / scoresArr.length).toFixed(2);
-  //! console.log(`EXERCISE 3 -> ${result}`);
+  console.log(`EXERCISE 3 -> ${result}`);
+
   return result;
 }
-//! moviesAverageOfDirector(movies, "Stanley Kubrick");
+moviesAverageOfDirector(movies, "Stanley Kubrick");
 
-//? Exercise 4:  Alphabetic order by title 
+// Exercise 4:  Alphabetic order by title 
 function orderAlphabetically(array) {
   let result = [];
   let movieTitlesArr = [];
@@ -72,19 +74,22 @@ function orderAlphabetically(array) {
   array.map(movie => {
     movieTitlesArr.push(movie.title);
   });
-  // console.log(movieTitlesArr);
+  console.log(movieTitlesArr);
 
   movieTitlesArr.forEach((element, i) => {
     if (i < 20) {
       first20MoviesArr.push(element);
     }
     result = first20MoviesArr.sort();
+    
   });
 
-  //! result.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}`));
+  first20MoviesArr.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}
+    `));
+
   return result;
 }
-//! orderAlphabetically(movies);
+orderAlphabetically(movies);
 
 // Exercise 5: Order by year, ascending
 function orderByYear(array) {
@@ -104,9 +109,10 @@ function orderByYear(array) {
   });
 
   result.forEach((year, i) => {
-    // aqui filtramos las que son del mismo año por orden alfabetico
-    //! console.log(`EXERCISE 5 -> num.${i+1} ${year}`);
+    console.log(`EXERCISE 5 -> num.${i+1} ${year}
+      `);
   });
+
   return result;
 }
 orderByYear(movies);
@@ -145,11 +151,13 @@ function moviesAverageByCategory(array, categoryName) {
 
   totalSum = (scoresArr.reduce((total, value) => total += value)).toFixed(2);
   result = (totalSum / genreArr.length).toFixed(2);
-  //! console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${genreArr.length}`);
+  console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${genreArr.length}
+    
+    `);
 
   return result;
 }
-//! moviesAverageByCategory(movies, "Sci-Fi");
+moviesAverageByCategory(movies, "Sci-Fi");
 
 
 // Exercise 7: Modify the duration of movies to minutes
@@ -178,44 +186,53 @@ function hoursToMinutes(array) {
       } else if (time.charAt(3) && isNaN(time.charAt(4))) {
           hoursInMinutes = parseInt(hours) * 60;
           result = hoursInMinutes + parseInt(minutes3);
-          // console.log(durationInMinArr)
+          console.log(durationInMinArr)
           // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
       }
       
-      //! console.log(`num.${i+1}'s timing -> ${element.duration}`);
+      console.log(`num.${i+1}'s timing -> ${element.duration}`);
       element.duration = result;
-      //! console.log(`as a result in minutes -> ${result}`);
+      console.log(`EXERCISE 7 -> as a result in minutes -> ${result}
+        `);
   });
-  
-  //! console.log(array);
+
   return array;
 }
 hoursToMinutes(movies);
 
 // Exercise 8: Get the best film of a year
 function bestFilmOfYear(array, yearInput) {
-  // encontrar mejor pelicula de x year
-  // necesito todos los scores de ese año
-  // necesito saber cual es el max score
 
-  let movieScoresArr = [];
-  // let yearToBeFound = toFilterElementPerYear(array, yearInput);
+  if (array.length == 0) { return };
+  if (!yearInput) { return };
+
   let maxScore = 0;
+  let bestTitles = [];
+  const movieScoresArr = [];
+  const movieTitlesArr = [];
+  const filteredMoviesPerYear = [];
 
   array.map(movie => {
-    if (movie.year == yearInput) {
-      movieScoresArr.push(array.filter(movie => movie.score));
-    }
+      if (movie.year == yearInput) {
+          movieScoresArr.push(movie.score);
+          movieTitlesArr.push(movie.title);
+          filteredMoviesPerYear.push(movie);
+      }
   });
-  console.log(movieScoresArr);
 
   movieScoresArr.sort((a, b) => { a - b });
   maxScore = movieScoresArr[0];
-  // console.log(maxScore);
-  return maxScore;
+
+  filteredMoviesPerYear.forEach(movie => {
+      if (movie.score == maxScore) {
+        bestTitles.push(movie.title);
+          console.log(`EXERCISE 8 -> Max score of year ${yearInput}: "${maxScore}" for -> ${movie.title}
+              Best title/s -> ${bestTitles}`);
+      }
+  });
+  return bestTitles;
 }
 bestFilmOfYear(movies, 1994);
-
 
 
 // The following is required to make unit tests work.
