@@ -1,5 +1,7 @@
 const movies = require("./data.cjs");
 
+const toFilterElementPerYear = (array, input) => { array.filter( element => element.year == input) };
+
 function toCleanString(string) {
   let cleanString = string.normalize("NFC").replace(/[^\w\s]/g, "").toLowerCase();
   return cleanString;
@@ -53,7 +55,7 @@ function moviesAverageOfDirector(array, director) {
       scoresArr.push(movie.score);
     }
   });
-  console.log(`ex 3 scores -> ${scoresArr}`);
+  // console.log(`ex 3 scores -> ${scoresArr}`);
 
   totalSum = scoresArr.reduce((total, value) => total += value);
   result = (totalSum / scoresArr.length).toFixed(2);
@@ -180,20 +182,39 @@ function hoursToMinutes(array) {
           // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
       }
       
-      console.log(`num.${i+1}'s timing -> ${element.duration}`);
+      //! console.log(`num.${i+1}'s timing -> ${element.duration}`);
       element.duration = result;
-      console.log(`as a result in minutes -> ${result}`);
+      //! console.log(`as a result in minutes -> ${result}`);
   });
   
-  console.log(array);
+  //! console.log(array);
   return array;
 }
 hoursToMinutes(movies);
 
 // Exercise 8: Get the best film of a year
-function bestFilmOfYear() {
+function bestFilmOfYear(array, yearInput) {
+  // encontrar mejor pelicula de x year
   // necesito todos los scores de ese año
+  // necesito saber cual es el max score
+
+  let movieScoresArr = [];
+  // let yearToBeFound = toFilterElementPerYear(array, yearInput);
+  let maxScore = 0;
+
+  array.map(movie => {
+    if (movie.year == yearInput) {
+      movieScoresArr.push(array.filter(movie => movie.score));
+    }
+  });
+  console.log(movieScoresArr);
+
+  movieScoresArr.sort((a, b) => { a - b });
+  maxScore = movieScoresArr[0];
+  // console.log(maxScore);
+  return maxScore;
 }
+bestFilmOfYear(movies, 1994);
 
 
 
