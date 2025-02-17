@@ -171,16 +171,10 @@ function hoursToMinutes(array) {
       hoursInMinutes = parseInt(hours) * 60;
       result = hoursInMinutes + parseInt(minutes);
       element.duration = parseInt(result);
-      // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes -> ${minutes} / result -> ${result}`);
 
-    } else if (time.charAt(3) && isNaN(time.charAt(4))) {
-      minutes3 = time.charAt(3);
-      minutes4 = null;
+    } else if (!time.includes("min")) {
       hoursInMinutes = parseInt(hours) * 60;
-      result = hoursInMinutes + parseInt(minutes3);
-      console.log(durationInMinArr);
-      element.duration = parseInt(result);
-      // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
+      result = hoursInMinutes;
     }
     console.log(`num.${i + 1}'s timing -> ${element.duration}`);
     
@@ -198,30 +192,25 @@ hoursToMinutes(movies);
 
 // Exercise 8: Get the best film of a year
 function bestFilmOfYear(array, yearInput) {
-
-  if (array.length == 0) { return };
-  if (!yearInput) { return };
+  if (array.length === 0 || !yearInput) return [];
 
   let maxScore = 0;
   let bestTitles = [];
-  const movieScoresArr = [];
-  const movieTitlesArr = [];
   const filteredMoviesPerYear = [];
 
   array.map(movie => {
-    if (movie.year == yearInput) {
-      movieScoresArr.push(movie.score);
-      movieTitlesArr.push(movie.title);
+    if (movie.year === parseInt(yearInput)) {
       filteredMoviesPerYear.push(movie);
     }
   });
 
-  movieScoresArr.sort((a, b) => { a - b });
-  maxScore = movieScoresArr[0];
+  if (filteredMoviesPerYear.length === 0) return [];
+
+  maxScore = Math.max(...filteredMoviesPerYear.map(movie => movie.score));
 
   filteredMoviesPerYear.forEach(movie => {
-    if (movie.score == maxScore) {
-      bestTitles.push(movie.title);
+    if (movie.score === maxScore) {
+      bestTitles.push(movie);
       console.log(`EXERCISE 8 -> Max score of year ${yearInput}: "${maxScore}" for -> ${movie.title}
               Best title/s -> ${bestTitles}`);
     }
