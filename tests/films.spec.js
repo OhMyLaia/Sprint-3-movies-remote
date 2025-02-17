@@ -1,4 +1,5 @@
 const movies = require('../src/data');
+
 const {
   getAllDirectors,
   getMoviesFromDirector,
@@ -293,8 +294,9 @@ describe('Function "orderByYear"', () => {
 // Exercise 6
 // YOUR CODE HERE. Test moviesAverageByCategory()
 describe('Function "moviesAverageByCategory"', () => {
-  it('ADD YOUR CODE IN films.spec.js file', () => {
-    expect(typeof hoursToMinutes).toBe('coffee');
+  it('should return the average score of all films of the same category', () => {
+    let averageScore = moviesAverageByCategory(movies, "Sci-Fi");
+    expect(averageScore).toBe(8.33);
   });
 });
 

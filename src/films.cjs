@@ -1,6 +1,7 @@
 const movies = require("./data.cjs");
 
 function toCleanString(string) {
+  if (!string) { return "" };
   let cleanString = string.normalize("NFC").replace(/[^\w\s]/g, "").toLowerCase();
 
   return cleanString;
@@ -27,17 +28,17 @@ function getMoviesFromDirector(array, director) {
   let result = [];
   let cleanName = "";
   let cleanDirector = toCleanString(director);
+  console.log(cleanDirector)
 
-  if (array.length === 0) { return 0 };
+  if (array.length === 0) { return [] };
 
-  array.filter(element => {
-    cleanName = toCleanString(element.director);
-    if (cleanName === cleanDirector) {
-      result.push(element.title);
+  array.forEach(element => {
+    if (toCleanString(element.director) === cleanDirector) {
+      console.log((toCleanString(element.director)));
+      result.push(element);
+      console.log(`exercise 2 titles -> ${element.title}`);
     }
   });
-  console.log(`EXERCISE 2 -> ${result}`);
-
   return result;
 }
 getMoviesFromDirector(movies, "Stanley Kubrick");
@@ -59,7 +60,7 @@ function moviesAverageOfDirector(array, director) {
   console.log(`ex 3 scores -> ${scoresArr}`);
 
   totalSum = scoresArr.reduce((total, value) => total += value);
-  result = (totalSum / scoresArr.length).toFixed(2);
+  result = parseFloat((totalSum / scoresArr.length).toFixed(2));
   console.log(`EXERCISE 3 -> ${result}`);
 
   return result;
@@ -69,51 +70,42 @@ moviesAverageOfDirector(movies, "Stanley Kubrick");
 // Exercise 4:  Alphabetic order by title 
 function orderAlphabetically(array) {
   let result = [];
+  let orderedMoviesArray = [];
   let movieTitlesArr = [];
-  let first20MoviesArr = [];
-  array.map(movie => {
-    movieTitlesArr.push(movie.title);
-  });
-  console.log(movieTitlesArr);
+  const title = "";
 
-  movieTitlesArr.forEach((element, i) => {
-    if (i < 20) {
-      first20MoviesArr.push(element);
-    }
-    result = first20MoviesArr.sort();
-    
+  // array.map(movie => {
+  //   movieTitlesArr.push(movie.title);
+  // });
+  // console.log(movieTitlesArr);
+
+  array.forEach(element => {
+    orderedMoviesArray.push(element.title);
   });
 
-  first20MoviesArr.forEach((title, i) => console.log(`EXERCISE 4 -> num.${i+1} ${title}
-    `));
-
+  result = orderedMoviesArray.sort().slice(0, 20);
+  console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`)
+  // result = orderedMoviesArray.slice(0, 20);
   return result;
 }
 orderAlphabetically(movies);
 
 // Exercise 5: Order by year, ascending
 function orderByYear(array) {
-  let result = [];
-  let movieReleaseArr = [];
-  let first20MoviesArr = [];
+  let orderedMoviesArray = [...array];
 
-  array.map(movie => {
-    movieReleaseArr.push(movie.year);
-  });
-
-  movieReleaseArr.forEach((element, i) => {
-    if (i < 20) {
-      first20MoviesArr.push(element);
+  orderedMoviesArray.sort((a, b) => {
+    if (a.year !== b.year) {
+      return a.year - b.year;
     }
-    result = first20MoviesArr.sort();
+  return a.title.localeCompare(b.title);
   });
 
-  result.forEach((year, i) => {
-    console.log(`EXERCISE 5 -> num.${i+1} ${year}
-      `);
+  console.log(`EXERCISE 5:`)
+  orderedMoviesArray.map( (element, i) => {
+    console.log(`n.${i+1} -> ${element.title} released -> ${element.year}`);
   });
-
-  return result;
+  return orderedMoviesArray;
 }
 orderByYear(movies);
 
@@ -125,37 +117,31 @@ function moviesAverageByCategory(array, categoryName) {
   let result = 0;
   let totalSum = 0;
   let score = 0;
-  let singleGenre = "";
-  let scoresArr = [];
-  let genreArr = [];
+  let counter = 0;
   let movie = {};
-  let genre = [];
+  let genres = [];
   let cleanCategory = toCleanString(categoryName);
 
   for (let i = 0; i < array.length; i++) {
     movie = array[i];
-    genre = movie.genre;
+    genres = movie.genre;
     score = movie.score
 
-    for (let j = 0; j < genre.length; j++) {
-      singleGenre = genre[j];
+    for (let j = 0; j < genres.length; j++) {
 
-      if (genre.length == 0) { return console.log(`no genres attached to this film`) };
+      if (genres.length == 0) { continue };
 
-      if (toCleanString(singleGenre) == cleanCategory) {
-        genreArr.push(singleGenre);
-        scoresArr.push(score);
+      if (toCleanString(genres[j]) === cleanCategory) {
+        totalSum += score;
+        counter++;
       }
     }
   }
+  if (counter === 0) { return 0 }
+  result = totalSum / counter;
+  console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${counter}`);
 
-  totalSum = (scoresArr.reduce((total, value) => total += value)).toFixed(2);
-  result = (totalSum / genreArr.length).toFixed(2);
-  console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${genreArr.length}
-    
-    `);
-
-  return result;
+  return parseFloat(result.toFixed(2));
 }
 moviesAverageByCategory(movies, "Sci-Fi");
 
@@ -169,34 +155,44 @@ function hoursToMinutes(array) {
   let hoursInMinutes = 0;
   let result = 0;
   let time = 0;
+  let arrCopy = [];
 
-  array.forEach((element, i)=> {
-      time = element.duration;
-      hours = time.charAt(0);
+  arrCopy = array.map((element, i) => {
+    if (!element.duration) { return 0 }
+    time = element.duration;
+    time = String(time);
+    hours = time.charAt(0);
 
-      if (time.charAt(3) && time.charAt(4)) {
-          minutes3 = time.charAt(3);
-          minutes4 = time.charAt(4);
+    if (time.charAt(3) && time.charAt(4)) {
+      minutes3 = time.charAt(3);
+      minutes4 = time.charAt(4);
 
-          minutes = minutes3 + minutes4;
-          hoursInMinutes = parseInt(hours) * 60;
-          result = hoursInMinutes + parseInt(minutes);
-          // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes -> ${minutes} / result -> ${result}`);
+      minutes = minutes3 + minutes4;
+      hoursInMinutes = parseInt(hours) * 60;
+      result = hoursInMinutes + parseInt(minutes);
+      element.duration = parseInt(result);
+      // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes -> ${minutes} / result -> ${result}`);
 
-      } else if (time.charAt(3) && isNaN(time.charAt(4))) {
-          hoursInMinutes = parseInt(hours) * 60;
-          result = hoursInMinutes + parseInt(minutes3);
-          console.log(durationInMinArr)
-          // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
-      }
-      
-      console.log(`num.${i+1}'s timing -> ${element.duration}`);
-      element.duration = result;
-      console.log(`EXERCISE 7 -> as a result in minutes -> ${result}
-        `);
+    } else if (time.charAt(3) && isNaN(time.charAt(4))) {
+      minutes3 = time.charAt(3);
+      minutes4 = null;
+      hoursInMinutes = parseInt(hours) * 60;
+      result = hoursInMinutes + parseInt(minutes3);
+      console.log(durationInMinArr);
+      element.duration = parseInt(result);
+      // console.log(`hours -> ${hours} / hoursInMinutes -> ${hoursInMinutes} / minutes3 -> ${minutes3}  result -> ${result}`);
+    }
+    console.log(`num.${i + 1}'s timing -> ${element.duration}`);
+    
+    console.log(`EXERCISE 7 -> as a result in minutes -> ${result}`);
+
+    return {
+      ...element,
+      duration: result,
+    };
   });
 
-  return array;
+  return arrCopy;
 }
 hoursToMinutes(movies);
 
@@ -213,22 +209,22 @@ function bestFilmOfYear(array, yearInput) {
   const filteredMoviesPerYear = [];
 
   array.map(movie => {
-      if (movie.year == yearInput) {
-          movieScoresArr.push(movie.score);
-          movieTitlesArr.push(movie.title);
-          filteredMoviesPerYear.push(movie);
-      }
+    if (movie.year == yearInput) {
+      movieScoresArr.push(movie.score);
+      movieTitlesArr.push(movie.title);
+      filteredMoviesPerYear.push(movie);
+    }
   });
 
   movieScoresArr.sort((a, b) => { a - b });
   maxScore = movieScoresArr[0];
 
   filteredMoviesPerYear.forEach(movie => {
-      if (movie.score == maxScore) {
-        bestTitles.push(movie.title);
-          console.log(`EXERCISE 8 -> Max score of year ${yearInput}: "${maxScore}" for -> ${movie.title}
+    if (movie.score == maxScore) {
+      bestTitles.push(movie.title);
+      console.log(`EXERCISE 8 -> Max score of year ${yearInput}: "${maxScore}" for -> ${movie.title}
               Best title/s -> ${bestTitles}`);
-      }
+    }
   });
   return bestTitles;
 }
