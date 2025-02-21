@@ -24,7 +24,7 @@ Before running the project, ensure you have the following installed:
 
 1. **Clone the repo**  
    ```
-   git clone https://github.com/OhMyLaia/sprint2.2-E-commerce-remote.git
+   git clone https://github.com/OhMyLaia/Sprint-3-movies-remote.git
    cd sprint2.2-E-commerce-remote
 2. 	To run tests with Jest:
  	```
