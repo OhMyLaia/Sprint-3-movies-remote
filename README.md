@@ -1,4 +1,4 @@
-# 📄  Movie finder by filters ✨
+# 📄  Movie finder using custom filters ✨
 - Building the logics to find movies from a database per director, year, average of the year, etc...
 - Code testing to ensure the program will run as expected, avoiding corner casings.
 
