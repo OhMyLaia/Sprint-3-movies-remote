@@ -298,7 +298,24 @@ describe('Function "moviesAverageByCategory"', () => {
     let averageScore = moviesAverageByCategory(movies, "Sci-Fi");
     expect(averageScore).toBe(8.33);
   });
+
+  it('should return 0 if no movies match the category', () => {
+    let averageScore = moviesAverageByCategory(movies, "Science Fiction");
+    expect(averageScore).toBe(0);
+  });
+
+  it('should return 0 if the movies array is empty', () => {
+    let averageScore = moviesAverageByCategory([], "Sci-Fi");
+    expect(averageScore).toBe(0);
+  });
+
+  it('should handle categories with different capitalizations', () => {
+    let averageScore = moviesAverageByCategory(movies, "sci-fi");
+    expect(averageScore).toBe(8.33);
+  });
 });
+
+
 
 // Exercise 7
 describe('Function "hoursToMinutes"', () => {

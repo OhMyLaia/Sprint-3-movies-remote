@@ -3,7 +3,6 @@ const movies = require("./data.cjs");
 function toCleanString(string) {
   if (!string) { return "" };
   let cleanString = string.normalize("NFC").replace(/[^\w\s]/g, "").toLowerCase();
-
   return cleanString;
 }
 
@@ -26,7 +25,6 @@ getAllDirectors(movies);
 function getMoviesFromDirector(array, director) {
 
   let result = [];
-  let cleanName = "";
   let cleanDirector = toCleanString(director);
   console.log(cleanDirector)
 
@@ -69,26 +67,35 @@ moviesAverageOfDirector(movies, "Stanley Kubrick");
 
 // Exercise 4:  Alphabetic order by title 
 function orderAlphabetically(array) {
-  let result = [];
-  let orderedMoviesArray = [];
-  let movieTitlesArr = [];
-  const title = "";
 
-  // array.map(movie => {
-  //   movieTitlesArr.push(movie.title);
-  // });
-  // console.log(movieTitlesArr);
-
-  array.forEach(element => {
-    orderedMoviesArray.push(element.title);
-  });
-
-  result = orderedMoviesArray.sort().slice(0, 20);
-  console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`)
-  // result = orderedMoviesArray.slice(0, 20);
+  const result = array
+    .map(element => element.title)
+    .sort()
+    .slice(0, 20);
+  console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`);
   return result;
 }
 orderAlphabetically(movies);
+// sort ordena raro
+
+
+// // Exercise 4:  Alphabetic order by title 
+// function orderAlphabetically(array) {
+//   let result = [];
+//   let orderedMoviesArray = [];
+//   const title = "";
+
+//   array.forEach(element => {
+//     orderedMoviesArray.push(element.title);
+//   });
+
+//   result = orderedMoviesArray.sort().slice(0, 20);
+//   console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`)
+//   // result = orderedMoviesArray.slice(0, 20);
+//   return result;
+// }
+// orderAlphabetically(movies);
+// // sort ordena raro
 
 // Exercise 5: Order by year, ascending
 function orderByYear(array) {
