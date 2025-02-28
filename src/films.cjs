@@ -7,7 +7,7 @@ function toCleanString(string) {
   return cleanString;
 }
 
-// Exercise 1: Get the array of all directors.
+// Get the array of all directors.
 function getAllDirectors(array) {
 
   if (array.length === 0) { return 0 };
@@ -15,13 +15,12 @@ function getAllDirectors(array) {
   const result = array
   .map(movie => 
   movie.director);
-  console.log(`EXERCISE 1 -> ${result}`);
 
   return result;
 }
 getAllDirectors(movies);
 
-// Exercise 2: Get the films of a certain director
+// Get the films of a certain director
 function getMoviesFromDirector(array, director) {
 
   const result = [];
@@ -31,7 +30,6 @@ function getMoviesFromDirector(array, director) {
 
   array.forEach(movie => {
     if (toCleanString(movie.director) === cleanDirector) {
-      console.log(`EXERCISE 2, titles -> ${movie.title}`);
       result.push(movie)
     }
   });
@@ -39,7 +37,7 @@ function getMoviesFromDirector(array, director) {
 }
 getMoviesFromDirector(movies, "Stanley Kubrick");
 
-// Exercise 3: Calculate the average of the films of a given director.
+// Calculate the average of the films of a given director.
 function moviesAverageOfDirector(array, director) {
 
   if (array.length === 0) { return 0 };
@@ -54,30 +52,28 @@ function moviesAverageOfDirector(array, director) {
       scoresArr.push(movie.score);
     }
   });
-  console.log(`ex 3 scores -> ${scoresArr}`);
 
   totalSum = scoresArr.reduce((total, value) => total += value);
   result = parseFloat((totalSum / scoresArr.length).toFixed(2));
-  console.log(`EXERCISE 3 -> ${result}`);
 
   return result;
 }
 moviesAverageOfDirector(movies, "Stanley Kubrick");
 
-// Exercise 4:  Alphabetic order by title 
+// Alphabetic order by title 
 function orderAlphabetically(array) {
 
   const result = array
     .map(element => element.title)
     .sort()
     .slice(0, 20);
-  console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`);
+
   return result;
 }
 orderAlphabetically(movies);
 
 
-// Exercise 5: Order by year, ascending
+// Order by year, ascending
 function orderByYear(array) {
   let orderedMoviesArray = [...array];
 
@@ -88,15 +84,11 @@ function orderByYear(array) {
   return a.title.localeCompare(b.title);
   });
 
-  console.log(`EXERCISE 5:`)
-  orderedMoviesArray.map( (element, i) => {
-    console.log(`n.${i+1} -> ${element.title} released -> ${element.year}`);
-  });
   return orderedMoviesArray;
 }
 orderByYear(movies);
 
-// Exercise 6: Calculate the average of the movies in a category
+// Calculate the average of the movies in a category
 function moviesAverageByCategory(array, categoryName) {
 
   if (array.length === 0) { return 0 };
@@ -126,14 +118,13 @@ function moviesAverageByCategory(array, categoryName) {
   }
   if (counter === 0) { return 0 }
   result = totalSum / counter;
-  console.log(`EXERCISE 6 -> result: ${result} = ${totalSum} / ${counter}`);
 
   return parseFloat(result.toFixed(2));
 }
 moviesAverageByCategory(movies, "Sci-Fi");
 
 
-// Exercise 7: Modify the duration of movies to minutes
+// Modify the duration of movies to minutes
 function hoursToMinutes(array) {
   let hours = 0;
   let minutes = 0;
@@ -163,9 +154,6 @@ function hoursToMinutes(array) {
       hoursInMinutes = parseInt(hours) * 60;
       result = hoursInMinutes;
     }
-    console.log(`num.${i + 1}'s timing -> ${element.duration}`);
-    
-    console.log(`EXERCISE 7 -> as a result in minutes -> ${result}`);
 
     return {
       ...element,
@@ -177,7 +165,7 @@ function hoursToMinutes(array) {
 }
 hoursToMinutes(movies);
 
-// Exercise 8: Get the best film of a year
+//Get the best film of a year
 function bestFilmOfYear(array, yearInput) {
   if (array.length === 0 || !yearInput) return [];
 
@@ -198,8 +186,6 @@ function bestFilmOfYear(array, yearInput) {
   filteredMoviesPerYear.forEach(movie => {
     if (movie.score === maxScore) {
       bestTitles.push(movie);
-      console.log(`EXERCISE 8 -> Max score of year ${yearInput}: "${maxScore}" for -> ${movie.title}
-              Best title/s -> ${bestTitles}`);
     }
   });
   return bestTitles;
