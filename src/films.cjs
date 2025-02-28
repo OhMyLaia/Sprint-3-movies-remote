@@ -1,6 +1,7 @@
 const movies = require("./data.cjs");
 
 function toCleanString(string) {
+
   if (!string) { return "" };
   let cleanString = string.normalize("NFC").replace(/[^\w\s]/g, "").toLowerCase();
   return cleanString;
@@ -9,13 +10,12 @@ function toCleanString(string) {
 // Exercise 1: Get the array of all directors.
 function getAllDirectors(array) {
 
-  let result = [];
   if (array.length === 0) { return 0 };
 
-  array.map(movie => {
-    result.push(movie.director);
-  });
-  console.log("EXERCISE 1 ->", result);
+  const result = array
+  .map(movie => 
+  movie.director);
+  console.log(`EXERCISE 1 -> ${result}`);
 
   return result;
 }
@@ -24,17 +24,15 @@ getAllDirectors(movies);
 // Exercise 2: Get the films of a certain director
 function getMoviesFromDirector(array, director) {
 
-  let result = [];
+  const result = [];
   let cleanDirector = toCleanString(director);
-  console.log(cleanDirector)
 
   if (array.length === 0) { return [] };
 
-  array.forEach(element => {
-    if (toCleanString(element.director) === cleanDirector) {
-      console.log((toCleanString(element.director)));
-      result.push(element);
-      console.log(`exercise 2 titles -> ${element.title}`);
+  array.forEach(movie => {
+    if (toCleanString(movie.director) === cleanDirector) {
+      console.log(`EXERCISE 2, titles -> ${movie.title}`);
+      result.push(movie)
     }
   });
   return result;
@@ -45,9 +43,10 @@ getMoviesFromDirector(movies, "Stanley Kubrick");
 function moviesAverageOfDirector(array, director) {
 
   if (array.length === 0) { return 0 };
+
   let result = 0;
-  let scoresArr = [];
   let totalSum = 0;
+  let scoresArr = [];
   let cleanDirector = toCleanString(director);
 
   array.map(movie => {
@@ -76,26 +75,7 @@ function orderAlphabetically(array) {
   return result;
 }
 orderAlphabetically(movies);
-// sort ordena raro
 
-
-// // Exercise 4:  Alphabetic order by title 
-// function orderAlphabetically(array) {
-//   let result = [];
-//   let orderedMoviesArray = [];
-//   const title = "";
-
-//   array.forEach(element => {
-//     orderedMoviesArray.push(element.title);
-//   });
-
-//   result = orderedMoviesArray.sort().slice(0, 20);
-//   console.log(`first 20 ordered (a-z) -> ${result.join(", ")}`)
-//   // result = orderedMoviesArray.slice(0, 20);
-//   return result;
-// }
-// orderAlphabetically(movies);
-// // sort ordena raro
 
 // Exercise 5: Order by year, ascending
 function orderByYear(array) {
