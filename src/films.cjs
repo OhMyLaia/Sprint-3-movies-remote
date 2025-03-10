@@ -7,7 +7,6 @@ function toCleanString(string) {
   return cleanString;
 }
 
-// Get the array of all directors.
 function getAllDirectors(array) {
 
   if (array.length === 0) { return 0 };
@@ -18,9 +17,8 @@ function getAllDirectors(array) {
 
   return result;
 }
-getAllDirectors(movies);
 
-// Get the films of a certain director
+
 function getMoviesFromDirector(array, director) {
 
   const result = [];
@@ -35,9 +33,9 @@ function getMoviesFromDirector(array, director) {
   });
   return result;
 }
-getMoviesFromDirector(movies, "Stanley Kubrick");
 
-// Calculate the average of the films of a given director.
+
+
 function moviesAverageOfDirector(array, director) {
 
   if (array.length === 0) { return 0 };
@@ -58,9 +56,9 @@ function moviesAverageOfDirector(array, director) {
 
   return result;
 }
-moviesAverageOfDirector(movies, "Stanley Kubrick");
 
-// Alphabetic order by title 
+
+
 function orderAlphabetically(array) {
 
   const result = array
@@ -73,7 +71,6 @@ function orderAlphabetically(array) {
 orderAlphabetically(movies);
 
 
-// Order by year, ascending
 function orderByYear(array) {
   let orderedMoviesArray = [...array];
 
@@ -86,9 +83,9 @@ function orderByYear(array) {
 
   return orderedMoviesArray;
 }
-orderByYear(movies);
 
-// Calculate the average of the movies in a category
+
+
 function moviesAverageByCategory(array, categoryName) {
 
   if (array.length === 0) { return 0 };
@@ -121,10 +118,9 @@ function moviesAverageByCategory(array, categoryName) {
 
   return parseFloat(result.toFixed(2));
 }
-moviesAverageByCategory(movies, "Sci-Fi");
 
 
-// Modify the duration of movies to minutes
+
 function hoursToMinutes(array) {
   let hours = 0;
   let minutes = 0;
@@ -163,9 +159,9 @@ function hoursToMinutes(array) {
 
   return arrCopy;
 }
-hoursToMinutes(movies);
 
-//Get the best film of a year
+
+
 function bestFilmOfYear(array, yearInput) {
   if (array.length === 0 || !yearInput) return [];
 
@@ -190,11 +186,8 @@ function bestFilmOfYear(array, yearInput) {
   });
   return bestTitles;
 }
-bestFilmOfYear(movies, 1994);
 
 
-// The following is required to make unit tests work.
-/* Environment setup. Do not modify the below code. */
 if (typeof module !== 'undefined') {
   module.exports = {
     getAllDirectors,
